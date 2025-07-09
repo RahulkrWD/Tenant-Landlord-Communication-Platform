@@ -130,6 +130,22 @@
   padding: 3rem 2rem;
   position: relative;
 }
+.errorMessage {
+  color: #dc3545;
+  background: #f8d7da;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.loadingIndicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
 @media (min-width: 768px) {
   .formSide {

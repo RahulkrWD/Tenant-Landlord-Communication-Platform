@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const token = sessionStorage.getItem("token");
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -43,11 +44,22 @@ const Navbar = () => {
             <span>FAQS</span>
             <div className={styles.linkUnderline}></div>
           </Link>
-          <Link to="/login" className={styles.navLink}>
-            <FaUser className={styles.navIcon} />
-            <span>SIGN IN</span>
-            <div className={styles.linkUnderline}></div>
-          </Link>
+          {token ? (
+            <Link className={styles.navLink}>
+              <FaUser className={styles.navIcon} />
+              <button className="border border-none">Logout</button>
+              <div className={styles.linkUnderline}></div>
+            </Link>
+          ) : (
+            <>
+              <Link to="/login" className={styles.navLink}>
+                <FaUser className={styles.navIcon} />
+                <span>SIGN IN</span>
+                <div className={styles.linkUnderline}></div>
+              </Link>
+            </>
+          )}
+
           <Link
             to="/schedule-demo"
             className={`${styles.navLink} ${styles.demoButton}`}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles/Signup.module.css";
 import {
   FaUserTie,
@@ -11,15 +11,23 @@ import {
   FaChevronRight,
   FaCheck,
   FaArrowLeft,
+  FaExclamationCircle,
+  FaSpinner,
 } from "react-icons/fa";
 import LoginImage from "../../assets/login-images.webp";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Signup = () => {
   // toggle landlord and tenant
   const [userType, setUserType] = useState("landlord");
   // steps
   const [currentStep, setCurrentStep] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const token = sessionStorage.getItem("token");
+  // console.log(token);
 
   // singup form for landlord and tenant
   const [formData, setFormData] = useState({
@@ -29,8 +37,13 @@ const Signup = () => {
     phone: "",
     property: "",
   });
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token]);
 
   // fill the form
   const handleChange = (e) => {
@@ -43,15 +56,39 @@ const Signup = () => {
   // prev step
   const prevStep = () => setCurrentStep(currentStep - 1);
 
+  // axios
+  const url = import.meta.env.VITE_API_URL;
+
+  const postData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.post(
+        `${url}/auth/${userType}-signup`,
+        formData
+      );
+      if (response.status == 200) {
+        navigate("/");
+
+        sessionStorage.setItem("token", JSON.stringify(response.data.token));
+      }
+    } catch (error) {
+      setError(
+        error.response?.data?.message || "Signup failed. Please try again."
+      );
+
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // submit form
   const handleSumit = (e) => {
     e.preventDefault();
-    let info = {
-      ...formData,
-      userType,
-    };
-    console.log(info);
-    navigate("/");
+    postData();
   };
 
   return (
@@ -182,6 +219,11 @@ const Signup = () => {
               <p className={styles.stepSubtitle}>
                 Please provide your details to create your account
               </p>
+              {error && (
+                <div className={styles.errorMessage}>
+                  <FaExclamationCircle /> {error}
+                </div>
+              )}
 
               <form onSubmit={handleSumit} className={styles.registrationForm}>
                 <div className={styles.formRow}>
@@ -276,11 +318,25 @@ const Signup = () => {
                     type="button"
                     className={styles.secondaryButton}
                     onClick={prevStep}
+                    disabled={loading}
                   >
                     Back
                   </button>
-                  <button type="submit" className={styles.primaryButton}>
-                    Create Account <FaChevronRight />
+
+                  <button
+                    type="submit"
+                    className={styles.primaryButton}
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <span className={styles.loadingIndicator}>
+                        <FaSpinner className="fa-spin" /> Processing...
+                      </span>
+                    ) : (
+                      <>
+                        Create Account <FaChevronRight />
+                      </>
+                    )}
                   </button>
                 </div>
               </form>

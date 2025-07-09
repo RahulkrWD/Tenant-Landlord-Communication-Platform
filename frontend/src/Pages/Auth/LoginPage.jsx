@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles/Login.module.css";
 import {
   FaUserTie,
@@ -7,17 +7,30 @@ import {
   FaLock,
   FaChevronRight,
   FaArrowLeft,
+  FaExclamationCircle,
+  FaSpinner,
 } from "react-icons/fa";
 import landlordImage from "../../assets/login-images.webp";
 import tenantImage from "../../assets/login-images.webp";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const [userType, setUserType] = useState("landlord");
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const token = sessionStorage.getItem("token");
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,11 +40,36 @@ const Login = () => {
     });
   };
 
+  // axios
+  const url = import.meta.env.VITE_API_URL;
+  const postData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.post(
+        `${url}/auth/${userType}-login`,
+        formData
+      );
+      if (response.status == 200) {
+        navigate("/");
+        sessionStorage.setItem("token", JSON.stringify(response.data.token));
+      }
+    } catch (error) {
+      setError(
+        error.response?.data?.message || "Signup failed. Please try again."
+      );
+
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(formData);
-    // Login logic will be added here
+    postData();
   };
 
   return (
@@ -95,6 +133,12 @@ const Login = () => {
               {userType === "landlord" ? "Landlord Login" : "Tenant Login"}
             </h3>
 
+            {error && (
+              <div className={styles.errorMessage}>
+                <FaExclamationCircle /> {error}
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className={styles.loginForm}>
               <div className={styles.inputGroup}>
                 <label htmlFor="email">Email Address</label>
@@ -132,8 +176,20 @@ const Login = () => {
                 </Link>
               </div>
 
-              <button type="submit" className={styles.loginButton}>
-                Log In <FaChevronRight className={styles.buttonIcon} />
+              <button
+                type="submit"
+                disabled={loading}
+                className={styles.loginButton}
+              >
+                {loading ? (
+                  <span className={styles.loadingIndicator}>
+                    <FaSpinner className="fa-spin" /> Processing...
+                  </span>
+                ) : (
+                  <>
+                    Log In <FaChevronRight />
+                  </>
+                )}
               </button>
             </form>
 
