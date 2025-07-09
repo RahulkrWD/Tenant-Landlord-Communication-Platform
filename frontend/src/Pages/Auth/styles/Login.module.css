@@ -111,6 +111,19 @@
   font-size: 1rem;
 }
 
+.backHome {
+  display: inline-flex;
+  align-items: center;
+  color: #7f8c8d;
+  text-decoration: none;
+  margin-bottom: 1rem;
+  transition: color 0.3s ease;
+}
+
+.backHome:hover {
+  color: #3498db;
+}
+
 /* Form Side */
 .formSide {
   flex: 1;

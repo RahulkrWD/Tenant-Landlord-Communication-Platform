@@ -6,9 +6,7 @@ import {
   FaEnvelope,
   FaLock,
   FaChevronRight,
-  FaFacebook,
-  FaGoogle,
-  FaApple,
+  FaArrowLeft,
 } from "react-icons/fa";
 import landlordImage from "../../assets/login-images.webp";
 import tenantImage from "../../assets/login-images.webp";
@@ -84,6 +82,10 @@ const Login = () => {
 
         {/* Right Side - Form */}
         <div className={styles.formSide}>
+          <Link to="/" className={styles.backHome}>
+            <FaArrowLeft className="me-2" />
+            Back to Home
+          </Link>
           <div className={styles.formWrapper}>
             <div className={styles.logo}>
               <span>HavenKey</span>

@@ -10,6 +10,7 @@ import {
   FaHome,
   FaChevronRight,
   FaCheck,
+  FaArrowLeft,
 } from "react-icons/fa";
 import LoginImage from "../../assets/login-images.webp";
 import { Link, useNavigate } from "react-router-dom";
@@ -102,6 +103,10 @@ const Signup = () => {
 
         {/* Right Side - Form */}
         <div className={styles.formSide}>
+          <Link to="/" className={styles.backHome}>
+            <FaArrowLeft className="me-2" />
+            Back to Home
+          </Link>
           {/* Progress Steps */}
           <div className={styles.progressSteps}>
             <div
