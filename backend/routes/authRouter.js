@@ -14,16 +14,10 @@ authRouter.post("/landlord-login", authController.landlordLogin);
 
 // Tenant and Landlord profile
 authRouter.get(
-  "/tenant",
+  "/profile",
   authMiddleware,
-  roleMiddleware(["tenant"]),
-  authController.getTanent
-);
-authRouter.get(
-  "/landlord",
-  authMiddleware,
-  roleMiddleware(["landlord"]),
-  authController.getLandlord
+  roleMiddleware(["tenant", "landlord"]),
+  authController.getProfile
 );
 
 module.exports = authRouter;

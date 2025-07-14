@@ -1,0 +1,41 @@
+.container {
+  min-height: calc(100vh - 120px);
+}
+
+.tabs {
+  border-bottom: 2px solid #dee2e6;
+}
+
+.tabTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: #495057;
+  padding: 0.5rem 1rem;
+}
+
+.tabIcon {
+  font-size: 1.2rem;
+}
+
+
+.tabContent {
+  padding: 2rem 0;
+  animation: fadeIn 0.5s ease;
+}
+
+@media (max-width: 768px) {
+  .tabTitle {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .tabIcon {
+    font-size: 1rem;
+  }
+  
+  .propertyCard {
+    padding: 1rem;
+  }
+}

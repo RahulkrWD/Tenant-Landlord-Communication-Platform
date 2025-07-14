@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const TenantSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     require: true,
@@ -20,9 +20,10 @@ const TenantSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    default: "tenant",
+    enum: ["tenant", "landlord"],
+    required: true,
   },
 });
 
-const TenantModel = mongoose.model("Tenant", TenantSchema);
-module.exports = TenantModel;
+const UserModel = mongoose.model("Users", UserSchema);
+module.exports = UserModel;

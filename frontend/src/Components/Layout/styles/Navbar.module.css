@@ -110,6 +110,7 @@
     border-radius: 4px;
     margin-left: auto;
     overflow: hidden;
+    border: none;
 }
 
 .buttonIcon {
@@ -194,6 +195,7 @@
     font-weight: 600;
     margin-top: 1rem;
     transition: all 0.3s ease;
+    border: none;
 }
 
 .mobileDemoButton:hover {

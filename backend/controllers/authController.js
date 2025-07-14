@@ -1,6 +1,4 @@
-// const UserModel = require("../models/user");
-const tenantModel = require("../models/tenant");
-const landlordModel = require("../models/landlord");
+const UserModel = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -15,8 +13,8 @@ const generateToken = (user) => {
 // tentant
 const tenantSignup = async (req, res) => {
   try {
-    const { name, email, password, phone } = req.body;
-    const existTenant = await tenantModel.findOne({ email });
+    const { name, email, password, phone, role } = req.body;
+    const existTenant = await UserModel.findOne({ email });
     if (existTenant)
       return res
         .status(400)
@@ -25,11 +23,12 @@ const tenantSignup = async (req, res) => {
     // hash password
     const hashedPassword = await bcrypt.hash(password, 10);
     // create user
-    const newTenant = await tenantModel.create({
+    const newTenant = await UserModel.create({
       name,
       email,
       password: hashedPassword,
       phone,
+      role,
     });
     // generate token
     const token = generateToken(newTenant);
@@ -49,7 +48,7 @@ const tenantSignup = async (req, res) => {
 const tenantLogin = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const tenant = await tenantModel.findOne({ email });
+    const tenant = await UserModel.findOne({ email });
     if (!tenant)
       return res
         .status(404)
@@ -78,9 +77,9 @@ const tenantLogin = async (req, res) => {
 
 // Landlord
 const landlordSignup = async (req, res) => {
-  const { name, email, password, property, phone } = req.body;
+  const { name, email, password, phone, role } = req.body;
   try {
-    const existLandlord = await landlordModel.findOne({ email });
+    const existLandlord = await UserModel.findOne({ email });
     if (existLandlord)
       return res
         .status(400)
@@ -89,12 +88,12 @@ const landlordSignup = async (req, res) => {
     // hash Password
     const hashedPassword = await bcrypt.hash(password, 10);
     // create new Landlord
-    const landlord = await landlordModel.create({
+    const landlord = await UserModel.create({
       name,
       email,
       password: hashedPassword,
-      property,
       phone,
+      role,
     });
 
     // generate token
@@ -115,7 +114,7 @@ const landlordSignup = async (req, res) => {
 const landlordLogin = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const landlord = await landlordModel.findOne({ email });
+    const landlord = await UserModel.findOne({ email });
     if (!landlord)
       return res
         .status(404)
@@ -144,43 +143,20 @@ const landlordLogin = async (req, res) => {
   }
 };
 
-// get Tenant using ID
-const getTanent = async (req, res) => {
+// get Tenant and landlord profile using ID
+const getProfile = async (req, res) => {
   try {
     const id = req.user.userId;
-    const tenant = await tenantModel.findById(id).select("-password  -__v");
+    const tenant = await UserModel.findById(id).select("-password  -__v");
     if (!tenant)
       res.status(400).json({
         success: false,
-        message: "Tenant Not Found, Please create an Account",
+        message: "Profile Not Found, Please create an Account",
       });
 
     res
       .status(200)
-      .json({ success: false, message: "Fetch Tenant Data", data: tenant });
-  } catch (error) {
-    res.status(400).json({
-      success: true,
-      message: "Internal Server Error",
-      error: error.message,
-    });
-  }
-};
-
-// get Landlord by ID
-const getLandlord = async (req, res) => {
-  try {
-    const id = req.user.userId;
-    const landlord = await landlordModel.findById(id).select("-password  -__v");
-    if (!landlord)
-      res.status(400).json({
-        success: false,
-        message: "Landlord Not Found, Please create an Account",
-      });
-
-    res
-      .status(200)
-      .json({ success: false, message: "Fetch Landlord Data", data: landlord });
+      .json({ success: false, message: "Fetch Proile Data", data: tenant });
   } catch (error) {
     res.status(400).json({
       success: true,
@@ -195,6 +171,5 @@ module.exports = {
   tenantSignup,
   landlordSignup,
   landlordLogin,
-  getTanent,
-  getLandlord,
+  getProfile,
 };

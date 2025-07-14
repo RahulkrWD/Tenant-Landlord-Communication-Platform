@@ -35,7 +35,6 @@ const Signup = () => {
     email: "",
     password: "",
     phone: "",
-    property: "",
   });
   const navigate = useNavigate();
 
@@ -59,14 +58,11 @@ const Signup = () => {
   // axios
   const url = import.meta.env.VITE_API_URL;
 
-  const postData = async () => {
+  const postData = async (obj) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post(
-        `${url}/auth/${userType}-signup`,
-        formData
-      );
+      const response = await axios.post(`${url}/auth/${userType}-signup`, obj);
       if (response.status == 200) {
         navigate("/");
 
@@ -88,7 +84,11 @@ const Signup = () => {
   // submit form
   const handleSumit = (e) => {
     e.preventDefault();
-    postData();
+    let obj = {
+      role: userType,
+      ...formData,
+    };
+    postData(obj);
   };
 
   return (
@@ -295,23 +295,6 @@ const Signup = () => {
                     </div>
                   </div>
                 </div>
-
-                {userType === "landlord" && (
-                  <div className={styles.inputGroup}>
-                    <label>Property Name</label>
-                    <div className={styles.inputWithIcon}>
-                      <FaBuilding />
-                      <input
-                        type="text"
-                        name="property"
-                        placeholder="Sunshine Apartments"
-                        value={formData.property}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                  </div>
-                )}
 
                 <div className={styles.formActions}>
                   <button
