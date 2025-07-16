@@ -74,7 +74,11 @@ const deletePropertyById = async (req, res) => {
       });
     }
 
-    await PropertyModel.findByIdAndDelete(id);
+    await PropertyModel.findByIdAndUpdate(
+      id,
+      { isActive: false },
+      { new: true }
+    );
     res
       .status(200)
       .json({ message: "Property deleted successfully", success: true });

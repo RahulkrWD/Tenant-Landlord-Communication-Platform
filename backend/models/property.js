@@ -18,6 +18,10 @@ const propertySchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const Property = mongoose.model("Property", propertySchema);

@@ -40,7 +40,7 @@ const Signup = () => {
 
   useEffect(() => {
     if (token) {
-      navigate("/");
+      navigate("/dashboard");
     }
   }, [token]);
 
@@ -64,7 +64,7 @@ const Signup = () => {
     try {
       const response = await axios.post(`${url}/auth/${userType}-signup`, obj);
       if (response.status == 200) {
-        navigate("/");
+        navigate("/dashboard");
 
         sessionStorage.setItem("token", JSON.stringify(response.data.token));
       }

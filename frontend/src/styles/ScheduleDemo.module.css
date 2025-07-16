@@ -1,0 +1,219 @@
+.demoContainer {
+  max-width: 1200px;
+}
+
+.heroSection {
+  padding: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.iconWrapper {
+  width: 80px;
+  height: 80px;
+  background-color: #e6f2ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.mainIcon {
+  font-size: 2.5rem;
+  color: #0d6efd;
+}
+
+.heroTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #212529;
+  margin-bottom: 1.5rem;
+}
+
+.heroText {
+  font-size: 1.1rem;
+  color: #495057;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.benefits {
+  margin-top: 2rem;
+}
+
+.benefitsTitle {
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 1rem;
+}
+
+.benefitsList {
+  padding-left: 1.5rem;
+  color: #495057;
+  line-height: 1.8;
+}
+
+.benefitsList li {
+  margin-bottom: 0.5rem;
+}
+
+.formCard {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem;
+  height: 100%;
+}
+
+.formTitle {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.inputGroup {
+  position: relative;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  z-index: 10;
+}
+
+.formInput {
+  padding-left: 45px;
+  height: 50px;
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  font-size: 1rem;
+}
+
+.formInput:focus {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.textarea {
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  font-size: 1rem;
+}
+
+.textarea:focus {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.submitButton {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  background-color: #0d6efd;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.submitButton:hover {
+  background-color: #0b5ed7;
+  transform: translateY(-2px);
+}
+
+.alert {
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading state styles */
+.spinner-border {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-width: 0.15em;
+}
+
+/* Disabled state styles */
+.formInput:disabled,
+.textarea:disabled {
+  background-color: #f8f9fa;
+  opacity: 0.8;
+}
+
+@media (max-width: 992px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+  
+  .heroText {
+    font-size: 1rem;
+  }
+  
+  .formCard {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .demoContainer {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .iconWrapper {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .mainIcon {
+    font-size: 2rem;
+  }
+  
+  .heroTitle {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .formTitle {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .formInput {
+    height: 45px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .formCard {
+    padding: 1.5rem;
+  }
+  
+  .submitButton {
+    padding: 10px;
+    font-size: 1rem;
+  }
+}

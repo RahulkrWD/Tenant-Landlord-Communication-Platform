@@ -28,7 +28,7 @@ const Login = () => {
   const token = sessionStorage.getItem("token");
   useEffect(() => {
     if (token) {
-      navigate("/");
+      navigate("/dashboard");
     }
   }, [token]);
 
@@ -51,7 +51,7 @@ const Login = () => {
         formData
       );
       if (response.status == 200) {
-        navigate("/");
+        navigate("/dashboard");
         sessionStorage.setItem("token", JSON.stringify(response.data.token));
       }
     } catch (error) {

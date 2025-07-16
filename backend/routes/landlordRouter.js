@@ -28,7 +28,7 @@ landlordRouter.get(
   landlordController.getPropertyById
 );
 
-landlordRouter.delete(
+landlordRouter.patch(
   "/delete-property/:id",
   authMiddleware,
   roleMiddleware(["landlord"]),

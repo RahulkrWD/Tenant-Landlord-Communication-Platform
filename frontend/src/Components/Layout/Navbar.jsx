@@ -44,10 +44,7 @@ const Navbar = () => {
               <span>PROPERTY MANAGERS</span>
               <div className={styles.linkUnderline}></div>
             </Link>
-            <Link to="/residents" className={styles.navLink}>
-              <span>RESIDENTS</span>
-              <div className={styles.linkUnderline}></div>
-            </Link>
+
             <Link to="/faqs" className={styles.navLink}>
               <FaQuestionCircle className={styles.navIcon} />
               <span>FAQS</span>
@@ -106,10 +103,7 @@ const Navbar = () => {
               <span>PRO</span>
               <div className={styles.linkUnderline}></div>
             </Link>
-            <Link to="/residents" className={styles.navLink}>
-              <span>RESIDENTS</span>
-              <div className={styles.linkUnderline}></div>
-            </Link>
+
             <Link to="/faqs" className={styles.navLink}>
               <FaQuestionCircle className={styles.navIcon} />
               <span>FAQS</span>
@@ -147,9 +141,7 @@ const Navbar = () => {
             <Link to="/property-managers" className={styles.mobileNavLink}>
               PROPERTY MANAGERS
             </Link>
-            <Link to="/residents" className={styles.mobileNavLink}>
-              RESIDENTS
-            </Link>
+
             <Link to="/faqs" className={styles.mobileNavLink}>
               <FaQuestionCircle className={styles.mobileNavIcon} /> FAQS
             </Link>
@@ -187,9 +179,7 @@ const Navbar = () => {
             <Link to="/property-managers" className={styles.mobileNavLink}>
               PROPERss
             </Link>
-            <Link to="/residents" className={styles.mobileNavLink}>
-              RESIDENTS
-            </Link>
+
             <Link to="/faqs" className={styles.mobileNavLink}>
               <FaQuestionCircle className={styles.mobileNavIcon} /> FAQS
             </Link>

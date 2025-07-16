@@ -3,7 +3,7 @@ import { Form, Button, Card, Spinner } from "react-bootstrap";
 import {
   HouseDoorFill,
   GeoAltFill,
-  CurrencyDollar,
+  CurrencyRupee,
 } from "react-bootstrap-icons";
 import styles from "./styles/CreateProperty.module.css";
 
@@ -57,7 +57,7 @@ function CreateProperty({ handleChange, handleSubmit, formData, loading }) {
           <Form.Group className="mb-4">
             <Form.Label className={styles.label}>Monthly Rent</Form.Label>
             <div className={styles.inputGroup}>
-              <CurrencyDollar className={styles.inputIcon} />
+              <CurrencyRupee className={styles.inputIcon} />
               <Form.Control
                 type="number"
                 name="rentAmount"

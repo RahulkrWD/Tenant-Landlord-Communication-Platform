@@ -1,0 +1,290 @@
+/* Hero Section */
+.heroSection {
+  background: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%);
+  color: white;
+  padding: 5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover;
+  opacity: 0.15;
+  z-index: 0;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  padding: 2rem 0;
+}
+
+.heroTitle {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.heroText {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+.heroImage {
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transition: transform 0.5s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.heroImage:hover {
+  transform: scale(1.03);
+}
+
+.heroButtons .btn {
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 500;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Features Section */
+.featuresSection {
+  padding: 5rem 0;
+  background-color: #f8f9fa;
+}
+
+.sectionTitle {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.sectionSubtitle {
+  font-size: 1.2rem;
+  color: #6c757d;
+  margin-bottom: 2rem;
+}
+
+.featureCard {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  height: 100%;
+  background-color: white;
+}
+
+.featureCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.featureIconContainer {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.featureIcon {
+  font-size: 2rem;
+}
+
+.featureTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+.featureText {
+  color: #6c757d;
+  margin-bottom: 1.5rem;
+}
+
+.featureLink {
+  color: #4e73df !important;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.featureLink:hover {
+  color: #2e59d9 !important;
+  transform: translateX(5px);
+}
+
+/* Testimonials Section */
+.testimonialsSection {
+  padding: 5rem 0;
+  background-color: white;
+}
+
+.testimonialCard {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.testimonialCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.testimonialContent {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.testimonialImage {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 1.5rem;
+  border: 3px solid #f8f9fa;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.testimonialText {
+  font-style: italic;
+  color: #495057;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.testimonialText::before,
+.testimonialText::after {
+  content: '"';
+  font-size: 2rem;
+  color: #4e73df;
+  opacity: 0.3;
+  position: absolute;
+}
+
+.testimonialText::before {
+  top: -15px;
+  left: -10px;
+}
+
+.testimonialText::after {
+  bottom: -25px;
+  right: -10px;
+}
+
+.testimonialAuthor {
+  margin-top: 1.5rem;
+}
+
+.testimonialAuthor strong {
+  display: block;
+  font-size: 1.1rem;
+  color: #2c3e50;
+}
+
+.testimonialAuthor span {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+/* CTA Section */
+.ctaSection {
+  background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+  color: white;
+  padding: 5rem 0;
+  text-align: center;
+}
+
+.ctaTitle {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.ctaText {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+.ctaButtons .btn {
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 500;
+  margin: 0 0.5rem 1rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .heroTitle {
+    font-size: 2.2rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.8rem;
+  }
+  
+  .ctaTitle {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    padding: 3rem 0;
+    text-align: center;
+  }
+  
+  .heroButtons {
+    justify-content: center;
+  }
+  
+  .heroImage {
+    margin-top: 2rem;
+  }
+  
+  .ctaButtons .btn {
+    width: 100%;
+    margin: 0 0 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .heroTitle {
+    font-size: 1.8rem;
+  }
+  
+  .featureIconContainer {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .featureIcon {
+    font-size: 1.5rem;
+  }
+  
+  .featureTitle {
+    font-size: 1.1rem;
+  }
+}
