@@ -27,12 +27,20 @@ landlordRouter.get(
   roleMiddleware(["landlord"]),
   landlordController.getPropertyById
 );
-
+// soft delete
 landlordRouter.patch(
   "/delete-property/:id",
   authMiddleware,
   roleMiddleware(["landlord"]),
-  landlordController.deletePropertyById
+  landlordController.softDeleteProperty
+);
+
+// hard delete
+landlordRouter.delete(
+  "/delete-property/:id",
+  authMiddleware,
+  roleMiddleware(["landlord"]),
+  landlordController.hardDeleteProperty
 );
 
 landlordRouter.patch(

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Tab, Tabs, Container } from "react-bootstrap";
-import { PlusCircleFill, ListUl } from "react-bootstrap-icons";
+import { PlusCircleFill, ListUl, Trash } from "react-bootstrap-icons";
 import Layout from "../../Components/Layout/Layout";
 import CreateProperty from "./CreateProperty";
 import DisplayProperty from "./DisplayProperty";
 import axios from "axios";
 import { url } from "../../utils/baseurl";
 import styles from "./styles/Properties.module.css";
+import DeletedProperty from "./DeletedProperty";
 
 function Properties() {
   const [activeTab, setActiveTab] = useState("create");
@@ -79,6 +80,24 @@ function Properties() {
         }
       );
       getProperties();
+      setActiveTab("view");
+    } catch (error) {
+      setError(error.response?.data?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const hardDelete = async (id) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await axios.delete(`${url}/landlord/delete-property/${id}`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+      getProperties();
     } catch (error) {
       setError(error.response?.data?.message);
     } finally {
@@ -87,7 +106,7 @@ function Properties() {
   };
 
   const isActive = properties.filter((items) => items.isActive);
-
+  const isDeleted = properties.filter((items) => !items.isActive);
   useEffect(() => {
     getProperties();
   }, []);
@@ -131,6 +150,21 @@ function Properties() {
               error={error}
               setActiveTab={setActiveTab}
               onDelete={deleteProperty}
+            />
+          </Tab>
+          <Tab
+            eventKey="deleted-property"
+            title={
+              <span className={styles.tabTitle}>
+                <Trash className={styles.tabIcon} />
+                Deleted Properties
+              </span>
+            }
+          >
+            <DeletedProperty
+              deleteProperty={isDeleted}
+              onRestore={deleteProperty}
+              onPermanentDelete={hardDelete}
             />
           </Tab>
         </Tabs>

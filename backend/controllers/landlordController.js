@@ -62,8 +62,8 @@ const getPropertyById = async (req, res) => {
   }
 };
 
-// delete property by id
-const deletePropertyById = async (req, res) => {
+// soft delete property by id
+const softDeleteProperty = async (req, res) => {
   const { id } = req.params;
   try {
     const property = await PropertyModel.findById(id);
@@ -79,6 +79,31 @@ const deletePropertyById = async (req, res) => {
       { isActive: !property.isActive },
       { new: true }
     );
+    res
+      .status(200)
+      .json({ message: "Property deleted successfully", success: true });
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+// hard Delete
+const hardDeleteProperty = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const property = await PropertyModel.findById(id);
+    if (!property) {
+      return res.status(404).json({
+        success: false,
+        message: "Property not found",
+      });
+    }
+
+    await PropertyModel.findByIdAndDelete(id);
     res
       .status(200)
       .json({ message: "Property deleted successfully", success: true });
@@ -122,6 +147,7 @@ module.exports = {
   createProperty,
   getproperty,
   getPropertyById,
-  deletePropertyById,
+  softDeleteProperty,
   updatePropertyById,
+  hardDeleteProperty,
 };

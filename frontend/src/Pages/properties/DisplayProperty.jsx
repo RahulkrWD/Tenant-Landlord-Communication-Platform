@@ -13,7 +13,6 @@ function DisplayProperty({
   properties,
   loading,
   error,
-  onEdit,
   onDelete,
   setActiveTab,
 }) {
