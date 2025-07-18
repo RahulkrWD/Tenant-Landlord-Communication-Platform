@@ -10,20 +10,20 @@ const generateToken = (user) => {
   );
 };
 
-// tentant
-const tenantSignup = async (req, res) => {
+// Signup
+const Signup = async (req, res) => {
   try {
     const { name, email, password, phone, role } = req.body;
-    const existTenant = await UserModel.findOne({ email });
-    if (existTenant)
+    const user = await UserModel.findOne({ email });
+    if (user)
       return res
         .status(400)
-        .json({ success: false, message: "Tenant Already Registered" });
+        .json({ success: false, message: "User Already Registered" });
 
     // hash password
     const hashedPassword = await bcrypt.hash(password, 10);
     // create user
-    const newTenant = await UserModel.create({
+    const newUser = await UserModel.create({
       name,
       email,
       password: hashedPassword,
@@ -31,10 +31,10 @@ const tenantSignup = async (req, res) => {
       role,
     });
     // generate token
-    const token = generateToken(newTenant);
+    const token = generateToken(newUser);
     res.status(200).json({
       success: true,
-      message: "Tenant Registered Successfully",
+      message: "User Registered Successfully",
       token,
     });
   } catch (error) {
@@ -45,93 +45,28 @@ const tenantSignup = async (req, res) => {
     });
   }
 };
-const tenantLogin = async (req, res) => {
+
+const Login = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const tenant = await UserModel.findOne({ email });
-    if (!tenant)
+    const user = await UserModel.findOne({ email });
+    if (!user)
       return res
         .status(404)
-        .json({ success: false, message: "Tenant Not Found" });
+        .json({ success: false, message: "User Not Found" });
 
     // campare password
-    const isPassword = await bcrypt.compare(password, tenant.password);
-    if (!isPassword)
-      return res
-        .status(404)
-        .json({ success: false, message: "Invalid password" });
-
-    // generate token
-    const token = generateToken(tenant);
-    res
-      .status(200)
-      .json({ success: true, message: "Tenant LoggedIn Successfully", token });
-  } catch (error) {
-    res.status(404).json({
-      success: false,
-      message: "Internal server error",
-      error: error.message,
-    });
-  }
-};
-
-// Landlord
-const landlordSignup = async (req, res) => {
-  const { name, email, password, phone, role } = req.body;
-  try {
-    const existLandlord = await UserModel.findOne({ email });
-    if (existLandlord)
-      return res
-        .status(400)
-        .json({ success: false, message: "Landlord Already Registered" });
-
-    // hash Password
-    const hashedPassword = await bcrypt.hash(password, 10);
-    // create new Landlord
-    const landlord = await UserModel.create({
-      name,
-      email,
-      password: hashedPassword,
-      phone,
-      role,
-    });
-
-    // generate token
-    const token = generateToken(landlord);
-    res.status(200).json({
-      success: true,
-      message: "Landlord Registered Successfully",
-      token,
-    });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: "Internal server error",
-      error: error.message,
-    });
-  }
-};
-const landlordLogin = async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const landlord = await UserModel.findOne({ email });
-    if (!landlord)
-      return res
-        .status(404)
-        .json({ success: false, message: "Landlord Not Found" });
-
-    // campare password
-    const isPassword = await bcrypt.compare(password, landlord.password);
+    const isPassword = await bcrypt.compare(password, user.password);
     if (!isPassword)
       return res
         .status(404)
         .json({ success: false, message: "Invalid Password" });
 
     // generate token
-    const token = generateToken(landlord);
+    const token = generateToken(user);
     res.status(200).json({
       success: true,
-      message: "Landlord LoggedIn Successfully",
+      message: "User LoggedIn Successfully",
       token,
     });
   } catch (error) {
@@ -143,12 +78,12 @@ const landlordLogin = async (req, res) => {
   }
 };
 
-// get Tenant and landlord profile using ID
+// get User profile using ID
 const getProfile = async (req, res) => {
   try {
     const id = req.user.userId;
-    const tenant = await UserModel.findById(id).select("-password  -__v");
-    if (!tenant)
+    const user = await UserModel.findById(id).select("-password  -__v");
+    if (!user)
       res.status(400).json({
         success: false,
         message: "Profile Not Found, Please create an Account",
@@ -156,7 +91,7 @@ const getProfile = async (req, res) => {
 
     res
       .status(200)
-      .json({ success: false, message: "Fetch Proile Data", data: tenant });
+      .json({ success: true, message: "Fetch Proile Data", data: user });
   } catch (error) {
     res.status(400).json({
       success: true,
@@ -167,9 +102,7 @@ const getProfile = async (req, res) => {
 };
 
 module.exports = {
-  tenantLogin,
-  tenantSignup,
-  landlordSignup,
-  landlordLogin,
+  Login,
+  Signup,
   getProfile,
 };

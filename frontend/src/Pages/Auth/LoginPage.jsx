@@ -10,13 +10,12 @@ import {
   FaExclamationCircle,
   FaSpinner,
 } from "react-icons/fa";
-import landlordImage from "../../assets/login-images.webp";
-import tenantImage from "../../assets/login-images.webp";
+import Image from "../../assets/login-images.webp";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { url } from "../../utils/baseurl";
 
 const Login = () => {
-  const [userType, setUserType] = useState("landlord");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -39,17 +38,12 @@ const Login = () => {
       [name]: value,
     });
   };
-
   // axios
-  const url = import.meta.env.VITE_API_URL;
   const postData = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post(
-        `${url}/auth/${userType}-login`,
-        formData
-      );
+      const response = await axios.post(`${url}/auth/login`, formData);
       if (response.status == 200) {
         navigate("/dashboard");
         sessionStorage.setItem("token", JSON.stringify(response.data.token));
@@ -79,10 +73,8 @@ const Login = () => {
         <div className={styles.visualSide}>
           <div className={styles.imageContainer}>
             <img
-              src={userType === "landlord" ? landlordImage : tenantImage}
-              alt={
-                userType === "landlord" ? "Property manager" : "Happy tenant"
-              }
+              src={Image}
+              alt="Property manager"
               className={styles.heroImage}
             />
             <div className={styles.imageOverlay}></div>
@@ -91,26 +83,15 @@ const Login = () => {
           <div className={styles.visualContent}>
             <h2>Welcome Back</h2>
             <p className={styles.welcomeMessage}>
-              {userType === "landlord"
-                ? "Manage your properties with ease"
-                : "Access your rental dashboard"}
+              Manage your properties with ease <br />
+              Access your rental dashboard
             </p>
             <div className={styles.userTypeToggle}>
-              <button
-                className={`${styles.toggleButton} ${
-                  userType === "landlord" ? styles.active : ""
-                }`}
-                onClick={() => setUserType("landlord")}
-              >
+              <button className={styles.toggleButton}>
                 <FaUserTie className={styles.toggleIcon} />
                 Landlord Login
               </button>
-              <button
-                className={`${styles.toggleButton} ${
-                  userType === "tenant" ? styles.active : ""
-                }`}
-                onClick={() => setUserType("tenant")}
-              >
+              <button className={styles.toggleButton}>
                 <FaUser className={styles.toggleIcon} />
                 Tenant Login
               </button>
@@ -128,10 +109,6 @@ const Login = () => {
             <div className={styles.logo}>
               <span>HavenKey</span>
             </div>
-
-            <h3 className={styles.formTitle}>
-              {userType === "landlord" ? "Landlord Login" : "Tenant Login"}
-            </h3>
 
             {error && (
               <div className={styles.errorMessage}>

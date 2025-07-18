@@ -65,6 +65,29 @@ function Properties() {
     }
   };
 
+  const deleteProperty = async (id) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.patch(
+        `${url}/landlord/delete-property/${id}`,
+        {}, // No request body since backend only need the IDs
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      getProperties();
+    } catch (error) {
+      setError(error.response?.data?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const isActive = properties.filter((items) => items.isActive);
+
   useEffect(() => {
     getProperties();
   }, []);
@@ -103,9 +126,11 @@ function Properties() {
             }
           >
             <DisplayProperty
-              properties={properties}
+              properties={isActive}
               loading={loading}
               error={error}
+              setActiveTab={setActiveTab}
+              onDelete={deleteProperty}
             />
           </Tab>
         </Tabs>

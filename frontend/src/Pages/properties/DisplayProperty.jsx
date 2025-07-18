@@ -9,7 +9,14 @@ import {
 import styles from "./styles/DisplayProperty.module.css";
 import { Link } from "react-router-dom";
 
-function DisplayProperty({ properties, loading, error, onEdit, onDelete }) {
+function DisplayProperty({
+  properties,
+  loading,
+  error,
+  onEdit,
+  onDelete,
+  setActiveTab,
+}) {
   if (loading) {
     return (
       <div className={styles.loadingContainer}>
@@ -26,6 +33,10 @@ function DisplayProperty({ properties, loading, error, onEdit, onDelete }) {
       </Alert>
     );
   }
+
+  const addToproperty = () => {
+    setActiveTab("create");
+  };
 
   return (
     <div className={styles.container}>
@@ -98,7 +109,11 @@ function DisplayProperty({ properties, loading, error, onEdit, onDelete }) {
           <p className={styles.emptyText}>
             You haven't added any properties yet
           </p>
-          <Button variant="primary" className={styles.addButton}>
+          <Button
+            onClick={addToproperty}
+            variant="primary"
+            className={styles.addButton}
+          >
             <PlusCircleFill className="me-2" /> Add First Property
           </Button>
         </div>

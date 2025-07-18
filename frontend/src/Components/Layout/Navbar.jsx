@@ -37,54 +37,43 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Desktop Navigation pulic */}
-        {token == null && (
-          <div className={styles.navLinks}>
-            <Link to="/property-managers" className={styles.navLink}>
-              <span>PROPERTY MANAGERS</span>
-              <div className={styles.linkUnderline}></div>
-            </Link>
+        {/* Desktop Navigation*/}
+        <div className={styles.navLinks}>
+          <Link
+            to={role ? "/dashboard" : "/property-managers"}
+            className={styles.navLink}
+          >
+            <span>{role ? "dashboard" : "property managers"}</span>
+            <div className={styles.linkUnderline}></div>
+          </Link>
 
-            <Link to="/faqs" className={styles.navLink}>
-              <FaQuestionCircle className={styles.navIcon} />
-              <span>FAQS</span>
-              <div className={styles.linkUnderline}></div>
-            </Link>
+          <Link
+            to={
+              role
+                ? role == "landlord"
+                  ? "/properties"
+                  : "/my-properties"
+                : "/faqs"
+            }
+            className={styles.navLink}
+          >
+            <FaQuestionCircle className={styles.navIcon} />
+            <span>
+              {role
+                ? role == "landlord"
+                  ? "properties"
+                  : "my properties"
+                : "faqs"}
+            </span>
+            <div className={styles.linkUnderline}></div>
+          </Link>
 
-            <Link to="/login" className={styles.navLink}>
-              <FaUser className={styles.navIcon} />
-              <span>SIGN IN</span>
-              <div className={styles.linkUnderline}></div>
-            </Link>
-            <Link
-              to="/schedule-demo"
-              className={`${styles.navLink} ${styles.demoButton}`}
-            >
-              <span>SCHEDULE DEMO</span>
-              <FaChevronRight className={styles.buttonIcon} />
-              <div className={styles.buttonHoverEffect}></div>
-            </Link>
-          </div>
-        )}
-
-        {/* Desktop Navigation token and role == "landlord*/}
-        {token && role == "landlord" && (
-          <div className={styles.navLinks}>
-            <Link to="/dashboard" className={styles.navLink}>
-              <span>dashboard</span>
-              <div className={styles.linkUnderline}></div>
-            </Link>
-            <Link to="/properties" className={styles.navLink}>
-              <FaQuestionCircle className={styles.navIcon} />
-              <span>properties</span>
-              <div className={styles.linkUnderline}></div>
-            </Link>
-
-            <Link to="/profile" className={styles.navLink}>
-              <FaUser className={styles.navIcon} />
-              <span>profile/settings</span>
-              <div className={styles.linkUnderline}></div>
-            </Link>
+          <Link to={role ? "/profile" : "/login"} className={styles.navLink}>
+            <FaUser className={styles.navIcon} />
+            <span>{role ? "profile/settings" : "sign In"}</span>
+            <div className={styles.linkUnderline}></div>
+          </Link>
+          {role ? (
             <button
               onClick={logout}
               className={`${styles.navLink} ${styles.demoButton}`}
@@ -93,28 +82,7 @@ const Navbar = () => {
               <FaChevronRight className={styles.buttonIcon} />
               <div className={styles.buttonHoverEffect}></div>
             </button>
-          </div>
-        )}
-
-        {/* Desktop Navigation pulic token and role == "tenant" */}
-        {token && role == "tenant" && (
-          <div className={styles.navLinks}>
-            <Link to="/property-managers" className={styles.navLink}>
-              <span>PRO</span>
-              <div className={styles.linkUnderline}></div>
-            </Link>
-
-            <Link to="/faqs" className={styles.navLink}>
-              <FaQuestionCircle className={styles.navIcon} />
-              <span>FAQS</span>
-              <div className={styles.linkUnderline}></div>
-            </Link>
-
-            <Link to="/login" className={styles.navLink}>
-              <FaUser className={styles.navIcon} />
-              <span>SIGN IN</span>
-              <div className={styles.linkUnderline}></div>
-            </Link>
+          ) : (
             <Link
               to="/schedule-demo"
               className={`${styles.navLink} ${styles.demoButton}`}
@@ -123,8 +91,8 @@ const Navbar = () => {
               <FaChevronRight className={styles.buttonIcon} />
               <div className={styles.buttonHoverEffect}></div>
             </Link>
-          </div>
-        )}
+          )}
+        </div>
 
         {/* Mobile Menu Button */}
         <button
@@ -135,60 +103,49 @@ const Navbar = () => {
           {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
-        {/* Mobile Navigation public*/}
-        {isMobileMenuOpen && token == null && (
+        {/* Mobile Navigation*/}
+        {isMobileMenuOpen && (
           <div className={styles.mobileMenu}>
-            <Link to="/property-managers" className={styles.mobileNavLink}>
-              PROPERTY MANAGERS
+            <Link
+              to={role ? "/dashboard" : "/property-managers"}
+              className={styles.mobileNavLink}
+            >
+              {role ? "dashboard" : "property managers"}
             </Link>
 
-            <Link to="/faqs" className={styles.mobileNavLink}>
-              <FaQuestionCircle className={styles.mobileNavIcon} /> FAQS
-            </Link>
-            <Link to="/login" className={styles.mobileNavLink}>
-              <FaUser className={styles.mobileNavIcon} /> SIGN IN
-            </Link>
-            <Link to="/schedule-demo" className={styles.mobileDemoButton}>
-              SCHEDULE DEMO <FaChevronRight />
-            </Link>
-          </div>
-        )}
-
-        {/* Mobile Navigation token role = landlord */}
-        {isMobileMenuOpen && token && role == "landlord" && (
-          <div className={styles.mobileMenu}>
-            <Link to="/dashboard" className={styles.mobileNavLink}>
+            <Link
+              to={
+                role
+                  ? role == "landlord"
+                    ? "/properties"
+                    : "/my-properties"
+                  : "/faqs"
+              }
+              className={styles.mobileNavLink}
+            >
               <FaQuestionCircle className={styles.mobileNavIcon} />
-              dashboard
+              {role
+                ? role == "landlord"
+                  ? "properties"
+                  : "my properties"
+                : "faqs"}
             </Link>
-            <Link to="/properties" className={styles.mobileNavLink}>
-              <FaQuestionCircle className={styles.mobileNavIcon} /> Properties
+            <Link
+              to={role ? "/profile" : "/login"}
+              className={styles.mobileNavLink}
+            >
+              <FaUser className={styles.mobileNavIcon} />{" "}
+              {role ? "profile/settings" : "sign In"}
             </Link>
-            <Link to="/profile" className={styles.mobileNavLink}>
-              <FaUser className={styles.mobileNavIcon} /> Profile/Settings
-            </Link>
-            <button onClick={logout} className={styles.mobileDemoButton}>
-              Logout <FaChevronRight />
-            </button>
-          </div>
-        )}
-
-        {/* Mobile Navigation token role = tenant */}
-        {isMobileMenuOpen && token && role == "tenant" && (
-          <div className={styles.mobileMenu}>
-            <Link to="/property-managers" className={styles.mobileNavLink}>
-              PROPERss
-            </Link>
-
-            <Link to="/faqs" className={styles.mobileNavLink}>
-              <FaQuestionCircle className={styles.mobileNavIcon} /> FAQS
-            </Link>
-            <Link to="/login" className={styles.mobileNavLink}>
-              <FaUser className={styles.mobileNavIcon} /> SIGN IN
-            </Link>
-            <Link to="/schedule-demo" className={styles.mobileDemoButton}>
-              SCHEDULE DEMO <FaChevronRight />
-            </Link>
+            {role ? (
+              <button onClick={logout} className={styles.mobileDemoButton}>
+                Logout <FaChevronRight />
+              </button>
+            ) : (
+              <Link to="/schedule-demo" className={styles.mobileDemoButton}>
+                SCHEDULE DEMO <FaChevronRight />
+              </Link>
+            )}
           </div>
         )}
       </div>

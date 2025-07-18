@@ -17,6 +17,7 @@ import {
 import LoginImage from "../../assets/login-images.webp";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { url } from "../../utils/baseurl";
 
 const Signup = () => {
   // toggle landlord and tenant
@@ -27,9 +28,6 @@ const Signup = () => {
   const [error, setError] = useState(null);
 
   const token = sessionStorage.getItem("token");
-  // console.log(token);
-
-  // singup form for landlord and tenant
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -56,13 +54,11 @@ const Signup = () => {
   const prevStep = () => setCurrentStep(currentStep - 1);
 
   // axios
-  const url = import.meta.env.VITE_API_URL;
-
-  const postData = async (obj) => {
+  const postData = async (data) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post(`${url}/auth/${userType}-signup`, obj);
+      const response = await axios.post(`${url}/auth/signup`, data);
       if (response.status == 200) {
         navigate("/dashboard");
 
@@ -84,11 +80,11 @@ const Signup = () => {
   // submit form
   const handleSumit = (e) => {
     e.preventDefault();
-    let obj = {
+    let data = {
       role: userType,
       ...formData,
     };
-    postData(obj);
+    postData(data);
   };
 
   return (
