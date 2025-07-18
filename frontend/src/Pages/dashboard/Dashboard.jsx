@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
 import Layout from "../../Components/Layout/Layout";
 import { useNavigate } from "react-router-dom";
+import getRole from "../../utils/checkRole";
+import LandlordDashboard from "./LandlordDashboard";
+import TenantDashboard from "./TenantDashboard";
 
 function Dashboard() {
-  const token = sessionStorage.getItem("token");
+  const token = JSON.parse(sessionStorage.getItem("token"));
   const navigate = useNavigate();
+  const role = getRole(token);
 
   useEffect(() => {
     if (!token) {
@@ -13,7 +17,7 @@ function Dashboard() {
   }, [token]);
   return (
     <Layout>
-      <h3>Dashboard</h3>
+      {role == "landlord" ? <LandlordDashboard /> : <TenantDashboard />}
     </Layout>
   );
 }

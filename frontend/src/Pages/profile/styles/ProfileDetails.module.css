@@ -1,0 +1,50 @@
+.profileCard{
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.animatedCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+
+.profileGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
+}
+
+.profileItem {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+}
+
+.label {
+  font-weight: 500;
+  color: #7f8c8d;
+}
+
+.value {
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 8px;
+  color: #3498db;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .profileItem {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+  
+}

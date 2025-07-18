@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./styles/Profile.module.css";
+import styles from "./styles/ProfileDetails.module.css";
 import { FaEnvelope, FaPhone, FaUserShield } from "react-icons/fa";
 
 function ProfileDetails({ profileData }) {

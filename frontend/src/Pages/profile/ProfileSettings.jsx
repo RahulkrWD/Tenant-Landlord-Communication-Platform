@@ -1,50 +1,57 @@
 import React, { useState } from "react";
-import styles from "./styles/Profile.module.css";
-import { FaMoon, FaSun, FaBell, FaLock } from "react-icons/fa";
+import styles from "./styles/ProfileSettings.module.css";
+import {
+  FaMoon,
+  FaSun,
+  FaLock,
+  FaSignOutAlt,
+  FaTrashAlt,
+} from "react-icons/fa";
 
 function ProfileSettings() {
   const [darkMode, setDarkMode] = useState(false);
-  const [notifications, setNotifications] = useState(true);
+
   return (
     <div className={`card ${styles.settingsCard} ${styles.animatedCard}`}>
-      <div className="card-body">
+      <div className="card-body d-flex flex-column">
+        <h5 className={styles.sectionTitle}>Account Settings</h5>
+
         <div className={styles.settingsGrid}>
-          <div className={`form-check form-switch ${styles.settingItem}`}>
-            <input
-              className="form-check-input"
-              type="checkbox"
-              id="darkModeSwitch"
-              checked={darkMode}
-              onChange={() => setDarkMode(!darkMode)}
-            />
-            <label className="form-check-label" htmlFor="darkModeSwitch">
-              {darkMode ? (
-                <FaSun className={styles.settingIcon} />
-              ) : (
-                <FaMoon className={styles.settingIcon} />
-              )}{" "}
-              Dark Mode
-            </label>
-          </div>
-
-          <div className={`form-check form-switch ${styles.settingItem}`}>
-            <input
-              className="form-check-input"
-              type="checkbox"
-              id="notificationsSwitch"
-              checked={notifications}
-              onChange={() => setNotifications(!notifications)}
-            />
-            <label className="form-check-label" htmlFor="notificationsSwitch">
-              <FaBell className={styles.settingIcon} /> Notifications
-            </label>
-          </div>
-
+          {/* Dark Mode Toggle */}
           <div className={styles.settingItem}>
-            <button className={`btn ${styles.actionButton}`}>
-              <FaLock /> Change Password
-            </button>
+            <div className="d-flex justify-content-between align-items-center">
+              <span className={styles.settingLabel}>
+                {darkMode ? (
+                  <FaSun className={styles.settingIcon} />
+                ) : (
+                  <FaMoon className={styles.settingIcon} />
+                )}{" "}
+                Dark Mode
+              </span>
+              <div className="form-check form-switch">
+                <input
+                  className={`form-check-input ${styles.toggleSwitch}`}
+                  type="checkbox"
+                  id="darkModeSwitch"
+                  checked={darkMode}
+                  onChange={() => setDarkMode(!darkMode)}
+                />
+              </div>
+            </div>
           </div>
+        </div>
+
+        {/* Action Buttons Row */}
+        <div className={`mt-auto ${styles.actionButtons}`}>
+          <button className={`btn ${styles.actionButton}`}>
+            <FaLock className={styles.buttonIcon} /> Change Password
+          </button>
+          <button className={`btn ${styles.logoutButton}`}>
+            <FaSignOutAlt className={styles.buttonIcon} /> Logout
+          </button>
+          <button className={`btn ${styles.deleteButton}`}>
+            <FaTrashAlt className={styles.buttonIcon} /> Delete Account
+          </button>
         </div>
       </div>
     </div>

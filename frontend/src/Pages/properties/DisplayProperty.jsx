@@ -63,10 +63,7 @@ function DisplayProperty({
                   <HouseDoorFill className={styles.propertyIcon} />
                 </div>
 
-                <Link
-                  to={property._id}
-                  className={`text-decoration-none ${styles.cardBody}`}
-                >
+                <div className={styles.cardBody}>
                   <h3 className={styles.propertyTitle}>
                     {property.propertyName}
                   </h3>
@@ -78,17 +75,15 @@ function DisplayProperty({
                       <strong>Rent:</strong> Rs {property.rentAmount}/month
                     </span>
                   </div>
-                </Link>
+                </div>
 
                 <div className={styles.cardFooter}>
-                  <Button
-                    variant="outline-primary"
-                    size="sm"
-                    onClick={() => onEdit(property)}
-                    className={styles.actionButton}
+                  <Link
+                    to={property._id}
+                    className={`text-decoration-none text-bg-success ${styles.actionButton}`}
                   >
-                    <PencilFill className="me-1" /> Edit
-                  </Button>
+                    <PencilFill className="m-1" /> View Details
+                  </Link>
                   <Button
                     variant="outline-danger"
                     size="sm"

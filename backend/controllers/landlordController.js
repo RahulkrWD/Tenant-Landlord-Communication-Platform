@@ -66,8 +66,8 @@ const getPropertyById = async (req, res) => {
 const deletePropertyById = async (req, res) => {
   const { id } = req.params;
   try {
-    const findProperty = await PropertyModel.findById(id);
-    if (!findProperty) {
+    const property = await PropertyModel.findById(id);
+    if (!property) {
       return res.status(404).json({
         success: false,
         message: "Property not found",
@@ -76,7 +76,7 @@ const deletePropertyById = async (req, res) => {
 
     await PropertyModel.findByIdAndUpdate(
       id,
-      { isActive: false },
+      { isActive: !property.isActive },
       { new: true }
     );
     res

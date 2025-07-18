@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./styles/Profile.module.css";
+import styles from "./styles/EditProfile.module.css";
 import { FaUser, FaEnvelope, FaPhone, FaTimes, FaSave } from "react-icons/fa";
 
 function EditProfile({ handleInputChange, formData, handleEditProfile }) {

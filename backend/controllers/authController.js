@@ -94,8 +94,39 @@ const getProfile = async (req, res) => {
       .json({ success: true, message: "Fetch Proile Data", data: user });
   } catch (error) {
     res.status(400).json({
-      success: true,
+      success: false,
       message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
+// update profile
+const updateProfile = async (req, res) => {
+  const { name, phone } = req.body;
+  const id = req.user.userId;
+  console.log(id);
+
+  try {
+    // Check if user exists
+    const findUser = await UserModel.findById(id);
+    if (!findUser) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+
+    // Update user
+    await UserModel.findByIdAndUpdate(id, { name, phone }, { new: true });
+
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
       error: error.message,
     });
   }
@@ -105,4 +136,5 @@ module.exports = {
   Login,
   Signup,
   getProfile,
+  updateProfile,
 };

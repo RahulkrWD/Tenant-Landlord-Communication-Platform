@@ -11,6 +11,7 @@ import Profile from "./Pages/profile/Profile";
 import Properties from "./Pages/properties/Properties";
 import Dashboard from "./Pages/dashboard/Dashboard";
 import PropertyDetails from "./Pages/ManageProperty/PropertyDetails";
+import MyProperty from "./Pages/MyProperty/MyProperty";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
       <Route path="/profile" element={<Profile />} />
       <Route path="/properties" element={<Properties />} />
       <Route path="/properties/:id" element={<PropertyDetails />} />
+      <Route path="/my-properties" element={<MyProperty />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

@@ -69,7 +69,7 @@ function Properties() {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.patch(
+      await axios.patch(
         `${url}/landlord/delete-property/${id}`,
         {}, // No request body since backend only need the IDs
         {

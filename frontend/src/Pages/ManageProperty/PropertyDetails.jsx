@@ -14,7 +14,7 @@ function PropertyDetails() {
   }, [token, navigate]);
   return (
     <Layout>
-      <h2>Hello</h2>
+      <h2>Manage Properties</h2>
     </Layout>
   );
 }

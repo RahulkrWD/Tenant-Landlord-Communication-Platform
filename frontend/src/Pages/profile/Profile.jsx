@@ -26,10 +26,23 @@ function Profile() {
     setUserProfile((prev) => ({ ...prev, [name]: value }));
   };
 
+  // update profile
+  const updateProfile = async (data) => {
+    try {
+      await axios.patch(`${url}/auth/profile`, data, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.log(error.response?.data?.message);
+    }
+  };
+
   // handle edit profile
   const handleEditProfile = (e) => {
     e.preventDefault();
-    console.log(userProfile);
+    updateProfile(userProfile);
     setActiveTab("profile");
   };
 
