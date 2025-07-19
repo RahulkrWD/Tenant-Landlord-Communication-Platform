@@ -17,11 +17,17 @@ const createProperty = async (req, res) => {
   }
 };
 
-// landlord will get only own property
+// get property
 const getproperty = async (req, res) => {
   try {
     const { userId } = req.user;
-    const properties = await PropertyModel.find({ landlordId: userId });
+    const { role } = req.user;
+    let query = {};
+    if (role == "landlord") query = { landlordId: userId };
+
+    if (role == "tenant") query = {};
+
+    const properties = await PropertyModel.find(query);
     res
       .status(200)
       .json({ success: true, message: "Fetch Properties", properties });
@@ -116,38 +122,10 @@ const hardDeleteProperty = async (req, res) => {
   }
 };
 
-// update property by id
-const updatePropertyById = async (req, res) => {
-  const { id } = req.params;
-  try {
-    // check if the property exists
-    const findProperty = await PropertyModel.findById(id);
-    if (!findProperty)
-      return res
-        .status(404)
-        .json({ message: "Property not found", success: false });
-
-    const updateProperty = await PropertyModel.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
-
-    res
-      .status(200)
-      .json({ message: "Property update ", success: true, updateProperty });
-  } catch (error) {
-    res.status(500).json({
-      message: "Internal server error",
-      success: false,
-      error: error.message,
-    });
-  }
-};
-
 module.exports = {
   createProperty,
   getproperty,
   getPropertyById,
   softDeleteProperty,
-  updatePropertyById,
   hardDeleteProperty,
 };

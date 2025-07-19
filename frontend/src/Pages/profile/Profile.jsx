@@ -11,13 +11,6 @@ import { url } from "../../utils/baseurl";
 
 function Profile() {
   const token = JSON.parse(sessionStorage.getItem("token"));
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    }
-  }, [token, navigate]);
-
   const [activeTab, setActiveTab] = useState("profile");
   const [userProfile, setUserProfile] = useState({});
 

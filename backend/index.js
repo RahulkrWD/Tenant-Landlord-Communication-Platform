@@ -4,7 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/mongodb");
 const authRouter = require("./routes/authRouter");
-const landlordRouter = require("./routes/landlordRouter");
+const propertyRouter = require("./routes/propertyRouter");
 const scheduleDemo = require("./routes/scheduleDemo");
 
 const app = express();
@@ -16,7 +16,7 @@ app.use(cors());
 app.use("/auth", authRouter);
 
 // Landlord Router
-app.use("/landlord", landlordRouter);
+app.use("/property", propertyRouter);
 
 // schedule demo
 app.use("/schedule-demo", scheduleDemo);

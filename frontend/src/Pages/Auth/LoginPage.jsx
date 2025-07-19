@@ -24,7 +24,7 @@ const Login = () => {
     password: "",
   });
 
-  const token = sessionStorage.getItem("token");
+  const token = JSON.parse(sessionStorage.getItem("token"));
   useEffect(() => {
     if (token) {
       navigate("/dashboard");

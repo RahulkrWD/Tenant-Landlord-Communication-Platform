@@ -33,7 +33,7 @@ function Properties() {
     setError(null);
 
     try {
-      await axios.post(`${url}/landlord/create-property`, formData, {
+      await axios.post(`${url}/property`, formData, {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -55,7 +55,7 @@ function Properties() {
 
   const getProperties = async () => {
     try {
-      const response = await axios.get(`${url}/landlord/get-property`, {
+      const response = await axios.get(`${url}/property`, {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -71,7 +71,7 @@ function Properties() {
     setError(null);
     try {
       await axios.patch(
-        `${url}/landlord/delete-property/${id}`,
+        `${url}/property/${id}`,
         {}, // No request body since backend only need the IDs
         {
           headers: {
@@ -92,7 +92,7 @@ function Properties() {
     setLoading(true);
     setError(null);
     try {
-      await axios.delete(`${url}/landlord/delete-property/${id}`, {
+      await axios.delete(`${url}/property/${id}`, {
         headers: {
           authorization: `Bearer ${token}`,
         },

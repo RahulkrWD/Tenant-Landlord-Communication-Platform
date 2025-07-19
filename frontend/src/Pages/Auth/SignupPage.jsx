@@ -27,7 +27,7 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const token = sessionStorage.getItem("token");
+  const token = JSON.parse(sessionStorage.getItem("token"));
   const [formData, setFormData] = useState({
     name: "",
     email: "",

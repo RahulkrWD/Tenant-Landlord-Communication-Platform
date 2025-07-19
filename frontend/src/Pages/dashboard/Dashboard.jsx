@@ -7,14 +7,7 @@ import TenantDashboard from "./TenantDashboard";
 
 function Dashboard() {
   const token = JSON.parse(sessionStorage.getItem("token"));
-  const navigate = useNavigate();
   const role = getRole(token);
-
-  useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    }
-  }, [token]);
   return (
     <Layout>
       {role == "landlord" ? <LandlordDashboard /> : <TenantDashboard />}
