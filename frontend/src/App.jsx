@@ -10,8 +10,10 @@ import PropertyManagerspage from "./Pages/PropertyManagerspage";
 import Profile from "./Pages/profile/Profile";
 import Properties from "./Pages/properties/Properties";
 import Dashboard from "./Pages/dashboard/Dashboard";
-import PropertyDetails from "./Pages/ManageProperty/PropertyDetails";
+import LandlordPropertyDetails from "./Pages/landlordProperty/LandlordPropertyDetails";
 import MyProperty from "./Pages/MyProperty/MyProperty";
+import BroserProperties from "./Pages/browseProperties/BroserProperties";
+import TenantPropertyDetails from "./Pages/tenantProperty/TenantPropertyDetails";
 
 const PrivateRoute = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
@@ -40,8 +42,13 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/properties" element={<Properties />} />
-        <Route path="/properties/:id" element={<PropertyDetails />} />
+        <Route path="/properties/:id" element={<LandlordPropertyDetails />} />
+        <Route
+          path="/browse-properties/:id"
+          element={<TenantPropertyDetails />}
+        />
         <Route path="/my-properties" element={<MyProperty />} />
+        <Route path="/browse-properties" element={<BroserProperties />} />
       </Route>
 
       <Route path="*" element={<PageNotFound />} />

@@ -40,10 +40,22 @@ const Navbar = () => {
         {/* Desktop Navigation*/}
         <div className={styles.navLinks}>
           <Link
-            to={role ? "/dashboard" : "/property-managers"}
+            to={
+              role
+                ? role == "landlord"
+                  ? "/dashboard"
+                  : "/browse-properties"
+                : "/property-managers"
+            }
             className={styles.navLink}
           >
-            <span>{role ? "dashboard" : "property managers"}</span>
+            <span>
+              {role
+                ? role == "landlord"
+                  ? "dashboard"
+                  : "browse properties"
+                : "property managers"}
+            </span>
             <div className={styles.linkUnderline}></div>
           </Link>
 
@@ -107,10 +119,20 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <div className={styles.mobileMenu}>
             <Link
-              to={role ? "/dashboard" : "/property-managers"}
+              to={
+                role
+                  ? role == "landlord"
+                    ? "/dashboard"
+                    : "/browse-properties"
+                  : "/property-managers"
+              }
               className={styles.mobileNavLink}
             >
-              {role ? "dashboard" : "property managers"}
+              {role
+                ? role == "landlord"
+                  ? "dashboard"
+                  : "browse properties"
+                : "property managers"}
             </Link>
 
             <Link

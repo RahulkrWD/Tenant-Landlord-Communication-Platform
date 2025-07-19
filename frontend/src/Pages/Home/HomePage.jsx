@@ -68,14 +68,6 @@ const HomePage = () => {
                 rent collection, maintenance tracking, and seamless
                 communication - all in one place.
               </p>
-              <div className={styles.heroButtons}>
-                <Button variant="primary" size="lg" className="me-3">
-                  Get Started
-                </Button>
-                <Button variant="outline-light" size="lg">
-                  Learn More
-                </Button>
-              </div>
             </Col>
             <Col lg={6} className="text-center">
               <img

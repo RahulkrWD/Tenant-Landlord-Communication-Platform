@@ -24,7 +24,7 @@ router.get(
 router.get(
   "/:id",
   authMiddleware,
-  roleMiddleware(["landlord"]),
+  roleMiddleware(["landlord", "tenant"]),
   propertyController.getPropertyById
 );
 // soft delete

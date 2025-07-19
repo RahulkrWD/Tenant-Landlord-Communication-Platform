@@ -92,7 +92,7 @@ function DeletedProperty({
                     <CurrencyRupee className="me-2 text-success" />
                     <div>
                       <small className="text-muted">Monthly Rent</small>
-                      <h6 className="mb-0">₹{property.rentAmount}</h6>
+                      <h6 className="mb-0">{property.rentAmount}</h6>
                     </div>
                   </div>
 
@@ -101,7 +101,7 @@ function DeletedProperty({
                       <CurrencyRupee className="me-2 text-info" />
                       <div>
                         <small className="text-muted">Security Deposit</small>
-                        <h6 className="mb-0">₹{property.depositAmount}</h6>
+                        <h6 className="mb-0">{property.depositAmount}</h6>
                       </div>
                     </div>
                   )}

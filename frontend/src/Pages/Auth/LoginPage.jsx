@@ -27,7 +27,7 @@ const Login = () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
   useEffect(() => {
     if (token) {
-      navigate("/dashboard");
+      navigate("/");
     }
   }, [token]);
 
@@ -45,7 +45,7 @@ const Login = () => {
     try {
       const response = await axios.post(`${url}/auth/login`, formData);
       if (response.status == 200) {
-        navigate("/dashboard");
+        navigate("/");
         sessionStorage.setItem("token", JSON.stringify(response.data.token));
       }
     } catch (error) {

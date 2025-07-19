@@ -45,7 +45,13 @@ const getPropertyById = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const findProperty = await PropertyModel.findById(id);
+    const findProperty = await PropertyModel.findById(id)
+      .populate({
+        path: "landlordId",
+        select: "name email phone role",
+        model: "Users", // Explicitly specifying the model name
+      })
+      .lean(); // convert to plain javascript object
 
     if (!findProperty) {
       return res.status(404).json({

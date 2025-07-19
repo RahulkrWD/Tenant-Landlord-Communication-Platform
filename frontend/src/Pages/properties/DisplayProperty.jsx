@@ -106,7 +106,7 @@ function DisplayProperty({
                         <CurrencyRupee className="me-2 text-success" />
                         <div>
                           <small className="text-muted">Monthly Rent</small>
-                          <h6 className="mb-0">₹{property.rentAmount}</h6>
+                          <h6 className="mb-0">{property.rentAmount}</h6>
                         </div>
                       </div>
                     </Col>
@@ -116,7 +116,7 @@ function DisplayProperty({
                         <div>
                           <small className="text-muted">Deposit</small>
                           <h6 className="mb-0">
-                            ₹{property.depositAmount || "0"}
+                            {property.depositAmount || "0"}
                           </h6>
                         </div>
                       </div>
