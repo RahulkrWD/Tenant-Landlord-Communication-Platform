@@ -57,7 +57,7 @@ function PropertyList({ properties, loading }) {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      navigate("/my-properties");
+      navigate("/my-properties?tab=interested");
     } catch (error) {
       console.log(error);
     }

@@ -1,0 +1,47 @@
+
+.custom-tabs .nav-link {
+  transition: all 0.3s ease;
+  border: none !important;
+  color: #6c757d;
+  position: relative;
+  padding: 0.75rem 1.25rem;
+}
+
+.custom-tabs .nav-link:hover {
+  color: #0d6efd;
+  transform: translateY(-2px);
+}
+
+.custom-tabs .nav-link.active {
+  color: #0d6efd;
+  background-color: transparent !important;
+  font-weight: 600;
+}
+
+.custom-tabs .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 3px;
+  background-color: #0d6efd;
+  border-radius: 3px;
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+@media (max-width: 768px) {
+  .custom-tabs .nav-link {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+}

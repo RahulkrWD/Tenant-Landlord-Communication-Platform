@@ -18,29 +18,6 @@ const createProperty = async (req, res) => {
   }
 };
 
-// get property
-// const getproperty = async (req, res) => {
-//   try {
-//     const { userId, role } = req.user;
-//     // const { role } = req.user;
-//     let query = {};
-//     if (role == "landlord") query = { landlordId: userId };
-
-//     if (role == "tenant") query = {};
-
-//     const properties = await PropertyModel.find(query);
-//     res
-//       .status(200)
-//       .json({ success: true, message: "Fetch Properties", properties });
-//   } catch (error) {
-//     res.status(500).json({
-//       success: false,
-//       message: "Internal Server error",
-//       error: error.message,
-//     });
-//   }
-// };
-
 // get property by id
 const getPropertyById = async (req, res) => {
   const { id } = req.params;
@@ -57,14 +34,14 @@ const getPropertyById = async (req, res) => {
       });
     }
 
-    if (role == "tenant") {
+    if (role === "tenant") {
       const property = await PropertyModel.aggregate([
         {
           $match: { _id: objectId },
         },
         {
           $lookup: {
-            from: "users", // your Users collection name
+            from: "users",
             localField: "landlordId",
             foreignField: "_id",
             as: "landlord",
@@ -74,21 +51,45 @@ const getPropertyById = async (req, res) => {
         {
           $lookup: {
             from: "interesteds",
-            let: { propertyId: "$_id" },
+            let: { propertyId: "$_id", tenantId: tenantId },
             pipeline: [
               {
                 $match: {
                   $expr: {
                     $and: [
                       { $eq: ["$propertyId", "$$propertyId"] },
-                      { $eq: ["$tenantId", tenantId] },
-                      { $eq: ["$interested", true] },
+                      { $eq: ["$tenantId", "$$tenantId"] },
+                      { $eq: ["$interested", true] }, // Only consider if interested is true
                     ],
                   },
                 },
               },
+              { $limit: 1 },
+              { $project: { _id: 0, interested: 1 } },
             ],
             as: "interestedData",
+          },
+        },
+        {
+          $lookup: {
+            from: "addtocarts",
+            let: { propertyId: "$_id", tenantId: tenantId },
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $and: [
+                      { $eq: ["$propertyId", "$$propertyId"] },
+                      { $eq: ["$tenantId", "$$tenantId"] },
+                      { $eq: ["$addToCart", true] }, // Only consider if addToCart is true
+                    ],
+                  },
+                },
+              },
+              { $limit: 1 },
+              { $project: { _id: 0, addToCart: 1 } },
+            ],
+            as: "cartData",
           },
         },
         {
@@ -96,6 +97,13 @@ const getPropertyById = async (req, res) => {
             interested: {
               $cond: {
                 if: { $gt: [{ $size: "$interestedData" }, 0] },
+                then: true,
+                else: false,
+              },
+            },
+            addToCart: {
+              $cond: {
+                if: { $gt: [{ $size: "$cartData" }, 0] },
                 then: true,
                 else: false,
               },
@@ -112,6 +120,7 @@ const getPropertyById = async (req, res) => {
             depositAmount: 1,
             isActive: 1,
             interested: 1,
+            addToCart: 1,
             landlord: {
               _id: "$landlord._id",
               name: "$landlord.name",
@@ -122,9 +131,17 @@ const getPropertyById = async (req, res) => {
           },
         },
       ]);
+
+      if (!property || property.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "Property not found",
+        });
+      }
+
       return res.status(200).json({
         success: true,
-        message: "fetch Property",
+        message: "Property fetched successfully",
         data: property[0],
       });
     }

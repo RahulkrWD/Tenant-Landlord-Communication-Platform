@@ -11,6 +11,7 @@ import {
   CreditCard,
   Heart,
   ArrowLeft,
+  CheckCircleFill,
 } from "react-bootstrap-icons";
 import {
   Container,
@@ -56,6 +57,20 @@ function TenantPropertyDetails() {
     fetchProperty();
   }, [id]);
 
+  const addToCart = async (id) => {
+    try {
+      let response = await axios.post(
+        `${url}/property-management/add-to-cart/${id}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      navigate("/my-properties?tab=cart");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   if (loading) {
     return (
       <Layout>
@@ -157,12 +172,22 @@ function TenantPropertyDetails() {
                   Book Now
                 </Button>
                 <Button
-                  variant="outline-primary"
+                  variant={property.addToCart ? "success" : "outline-primary"}
                   size="lg"
-                  onClick={() => navigate("/my-properties")}
+                  onClick={() => addToCart(property._id)}
+                  disabled={property.addToCart}
                 >
-                  <CartPlus className="me-2" />
-                  Add to Cart
+                  {property.addToCart ? (
+                    <>
+                      <CheckCircleFill className="me-2" />
+                      In Cart
+                    </>
+                  ) : (
+                    <>
+                      <CartPlus className="me-2" />
+                      Add to Cart
+                    </>
+                  )}
                 </Button>
               </div>
             </Card.Body>

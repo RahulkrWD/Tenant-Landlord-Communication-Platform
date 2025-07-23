@@ -13,7 +13,6 @@ const addToCartSchema = new mongoose.Schema({
   },
   addToCart: {
     type: Boolean,
-    default: false,
     required: true,
   },
   addedAt: {
