@@ -11,6 +11,12 @@ const propertyTypes = [
   { value: "Other", label: "Other" },
 ];
 
+const availabilityOptions = [
+  { value: "", label: "All Properties" },
+  { value: "available", label: "Available Only" },
+  { value: "unavailable", label: "Unavailable Only" },
+];
+
 function PropertyFilter({ filters, setFilters, propertyCount }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,7 +26,7 @@ function PropertyFilter({ filters, setFilters, propertyCount }) {
   return (
     <div className="mb-4 p-3 bg-light rounded">
       <Row className="align-items-center">
-        <Col md={4}>
+        <Col md={3}>
           <Form.Group>
             <Form.Label className="d-flex align-items-center">
               <Funnel className="me-2" /> Property Type
@@ -39,7 +45,24 @@ function PropertyFilter({ filters, setFilters, propertyCount }) {
           </Form.Group>
         </Col>
 
-        <Col md={4}>
+        <Col md={3}>
+          <Form.Group>
+            <Form.Label>Availability</Form.Label>
+            <Form.Select
+              name="availability"
+              value={filters.availability}
+              onChange={handleChange}
+            >
+              {availabilityOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+        </Col>
+
+        <Col md={3}>
           <Form.Group>
             <Form.Label>Sort by Rent</Form.Label>
             <Form.Select
@@ -71,7 +94,7 @@ function PropertyFilter({ filters, setFilters, propertyCount }) {
           </Form.Group>
         </Col>
 
-        <Col md={4} className="text-end">
+        <Col md={3} className="text-end">
           <Badge bg="secondary" className="fs-6">
             {propertyCount} Properties Found
           </Badge>

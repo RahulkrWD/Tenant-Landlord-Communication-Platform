@@ -48,67 +48,81 @@ function PropertyList({ properties, loading }) {
     <Row xs={1} md={2} lg={3} className="g-4">
       {properties.map((property) => (
         <Col key={property._id}>
-          <Card className="h-100 property-card">
-            <Card.Header className="d-flex justify-content-between align-items-center">
-              <Card.Title className="mb-0 text-truncate">
-                {property.propertyName}
-              </Card.Title>
-              <Badge
-                pill
-                bg={propertyTypeBadges[property.propertyType] || "secondary"}
-              >
-                {property.propertyType}
-              </Badge>
-            </Card.Header>
+          <div
+            className={`position-relative ${
+              !property.isActive ? "disabled-card" : ""
+            }`}
+            style={
+              !property.isActive ? { pointerEvents: "none", opacity: 0.5 } : {}
+            }
+          >
+            <Card className="h-100 property-card">
+              <Card.Header className="d-flex justify-content-between align-items-center">
+                <Card.Title className="mb-0 text-truncate">
+                  {property.propertyName}
+                </Card.Title>
+                <Badge
+                  pill
+                  bg={propertyTypeBadges[property.propertyType] || "secondary"}
+                >
+                  {property.propertyType}
+                </Badge>
+              </Card.Header>
 
-            <Card.Body>
-              <div className="mb-3">
-                <h6 className="d-flex align-items-center text-muted">
-                  <GeoAlt className="me-2" />
-                  Location
-                </h6>
-                <p className="mb-0">{formatAddress(property.address)}</p>
-              </div>
+              <Card.Body>
+                <div className="mb-3">
+                  <h6 className="d-flex align-items-center text-muted">
+                    <GeoAlt className="me-2" />
+                    Location
+                  </h6>
+                  <p className="mb-0">{formatAddress(property.address)}</p>
+                </div>
 
-              <div className="d-flex justify-content-between mb-3">
-                <div className="d-flex align-items-center">
-                  <CurrencyRupee className="me-2 text-success" />
-                  <div>
-                    <small className="text-muted">Monthly Rent</small>
-                    <h6 className="mb-0">₹{property.rentAmount}</h6>
+                <div className="d-flex justify-content-between mb-3">
+                  <div className="d-flex align-items-center">
+                    <CurrencyRupee className="me-2 text-success" />
+                    <div>
+                      <small className="text-muted">Monthly Rent</small>
+                      <h6 className="mb-0">₹{property.rentAmount}</h6>
+                    </div>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    {property.isActive ? (
+                      <Badge bg="success" className="d-flex align-items-center">
+                        <CheckCircle className="me-1" />
+                        Available
+                      </Badge>
+                    ) : (
+                      <Badge bg="danger" className="d-flex align-items-center">
+                        <XCircle className="me-1" />
+                        Not Available
+                      </Badge>
+                    )}
                   </div>
                 </div>
-                <div className="d-flex align-items-center">
-                  {property.isActive ? (
-                    <Badge bg="success" className="d-flex align-items-center">
-                      <CheckCircle className="me-1" />
-                      Available
-                    </Badge>
-                  ) : (
-                    <Badge bg="danger" className="d-flex align-items-center">
-                      <XCircle className="me-1" />
-                      Booked
-                    </Badge>
-                  )}
-                </div>
-              </div>
-            </Card.Body>
+              </Card.Body>
 
-            <Card.Footer className="bg-white">
-              <div className="d-flex justify-content-between gap-2">
-                <Button
-                  onClick={() => navigate(property._id)}
-                  variant="outline-primary"
-                  className="flex-grow-1"
-                >
-                  <Eye className="me-1" /> View
-                </Button>
-                <Button variant="outline-success" className="flex-grow-1">
-                  <Heart className="me-1" /> Interested
-                </Button>
-              </div>
-            </Card.Footer>
-          </Card>
+              <Card.Footer className="bg-white">
+                <div className="d-flex justify-content-between gap-2">
+                  <Button
+                    onClick={() => navigate(property._id)}
+                    variant="outline-primary"
+                    className="flex-grow-1"
+                    disabled={!property.isActive}
+                  >
+                    <Eye className="me-1" /> View
+                  </Button>
+                  <Button
+                    variant="outline-success"
+                    className="flex-grow-1"
+                    disabled={!property.isActive}
+                  >
+                    <Heart className="me-1" /> Interested
+                  </Button>
+                </div>
+              </Card.Footer>
+            </Card>
+          </div>
         </Col>
       ))}
     </Row>
