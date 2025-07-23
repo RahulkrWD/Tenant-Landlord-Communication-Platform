@@ -9,10 +9,12 @@ const addToCartSchema = new mongoose.Schema({
   propertyId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Property",
+    required: true,
   },
   addToCart: {
     type: Boolean,
     default: false,
+    required: true,
   },
   addedAt: {
     type: Date,
