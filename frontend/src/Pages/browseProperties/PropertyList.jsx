@@ -6,12 +6,16 @@ import {
   CurrencyRupee,
   Eye,
   Heart,
+  HeartFill,
   CheckCircle,
   XCircle,
 } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
+import { url } from "../../utils/baseurl";
+import axios from "axios";
 
 function PropertyList({ properties, loading }) {
+  const token = JSON.parse(sessionStorage.getItem("token"));
   const navigate = useNavigate();
   const propertyTypeBadges = {
     "1BHK": "primary",
@@ -43,6 +47,21 @@ function PropertyList({ properties, loading }) {
       </div>
     );
   }
+
+  const makeInterested = async (id) => {
+    try {
+      await axios.post(
+        `${url}/property-management/interested/${id}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      navigate("/my-properties");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Row xs={1} md={2} lg={3} className="g-4">
@@ -113,11 +132,24 @@ function PropertyList({ properties, loading }) {
                     <Eye className="me-1" /> View
                   </Button>
                   <Button
-                    variant="outline-success"
-                    className="flex-grow-1"
-                    disabled={!property.isActive}
+                    onClick={() => makeInterested(property._id)}
+                    variant={
+                      property.interested ? "success" : "outline-success"
+                    }
+                    className={`flex-grow-1 ${
+                      property.interested ? "text-white" : ""
+                    }`}
+                    disabled={!property.isActive || property.interested}
                   >
-                    <Heart className="me-1" /> Interested
+                    {property.interested ? (
+                      <>
+                        <HeartFill className="me-1" /> Interested
+                      </>
+                    ) : (
+                      <>
+                        <Heart className="me-1" /> Interested
+                      </>
+                    )}
                   </Button>
                 </div>
               </Card.Footer>

@@ -31,9 +31,9 @@ function TenantPropertyDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [property, setProperty] = useState(null);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isFavorite, setIsFavorite] = useState(false);
   const token = JSON.parse(sessionStorage.getItem("token"));
 
   useEffect(() => {
@@ -84,7 +84,6 @@ function TenantPropertyDetails() {
       </Layout>
     );
   }
-
   return (
     <Layout>
       <Container className="py-4">
@@ -104,19 +103,18 @@ function TenantPropertyDetails() {
             <Card.Body>
               <div className="d-flex justify-content-between align-items-start flex-wrap mb-3">
                 <div>
-                  <h2 className="mb-1">{property.propertyName}</h2>
+                  <h2 className="mb-1">{property?.propertyName}</h2>
                   <Badge
-                    bg={property.isActive ? "success" : "danger"}
+                    bg={property?.isActive ? "success" : "danger"}
                     className="mb-2"
                   >
-                    {property.isActive ? "Available" : "Not Available"}
+                    {property?.isActive ? "Available" : "Not Available"}
                   </Badge>
                 </div>
                 <Button
-                  variant={isFavorite ? "danger" : "outline-danger"}
-                  onClick={() => setIsFavorite(!isFavorite)}
+                  variant={property.interested ? "danger" : "outline-danger"}
                 >
-                  <Heart className={isFavorite ? "fill" : ""} />
+                  <Heart className={property.interested ? "fill" : ""} />
                 </Button>
               </div>
 
@@ -130,8 +128,8 @@ function TenantPropertyDetails() {
                 Address
               </h5>
               <p>
-                {property.address.exactLocation}, {property.address.city},{" "}
-                {property.address.state} - {property.address.pincode}
+                {property?.address?.exactLocation}, {property?.address?.city},{" "}
+                {property.address.state} - {property.address?.pincode}
               </p>
 
               <h5 className="d-flex align-items-center mt-3">
@@ -141,20 +139,28 @@ function TenantPropertyDetails() {
               <Row className="mb-3">
                 <Col xs={6}>
                   <small className="text-muted">Monthly Rent</small>
-                  <h5 className="text-success mt-1">₹{property.rentAmount}</h5>
+                  <h5 className="text-success mt-1">₹{property?.rentAmount}</h5>
                 </Col>
                 <Col xs={6}>
                   <small className="text-muted">Deposit</small>
-                  <h5 className="text-info mt-1">₹{property.depositAmount}</h5>
+                  <h5 className="text-info mt-1">₹{property?.depositAmount}</h5>
                 </Col>
               </Row>
 
               <div className="d-grid gap-2 property-actions mt-4">
-                <Button variant="primary" size="lg">
+                <Button
+                  variant="primary"
+                  size="lg"
+                  onClick={() => navigate("/my-properties")}
+                >
                   <CreditCard className="me-2" />
                   Book Now
                 </Button>
-                <Button variant="outline-primary" size="lg">
+                <Button
+                  variant="outline-primary"
+                  size="lg"
+                  onClick={() => navigate("/my-properties")}
+                >
                   <CartPlus className="me-2" />
                   Add to Cart
                 </Button>
@@ -174,21 +180,21 @@ function TenantPropertyDetails() {
                   <Person size={22} className="me-3 text-secondary" />
                   <div>
                     <small className="text-muted">Name</small>
-                    <h6>{property.landlordId.name}</h6>
+                    <h6>{property?.landlord?.name}</h6>
                   </div>
                 </div>
                 <div className="d-flex align-items-center">
                   <Envelope size={22} className="me-3 text-secondary" />
                   <div>
                     <small className="text-muted">Email</small>
-                    <h6>{property.landlordId.email}</h6>
+                    <h6>{property?.landlord?.email}</h6>
                   </div>
                 </div>
                 <div className="d-flex align-items-center">
                   <Telephone size={22} className="me-3 text-secondary" />
                   <div>
                     <small className="text-muted">Phone</small>
-                    <h6>{property.landlordId.phone}</h6>
+                    <h6>{property?.landlord?.phone}</h6>
                   </div>
                 </div>
               </div>
