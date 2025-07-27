@@ -11,11 +11,8 @@ import {
   XCircle,
 } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
-import { url } from "../../utils/baseurl";
-import axios from "axios";
 
-function PropertyList({ properties, loading }) {
-  const token = JSON.parse(sessionStorage.getItem("token"));
+function PropertyList({ properties, loading, makeInterested }) {
   const navigate = useNavigate();
   const propertyTypeBadges = {
     "1BHK": "primary",
@@ -47,21 +44,6 @@ function PropertyList({ properties, loading }) {
       </div>
     );
   }
-
-  const makeInterested = async (id) => {
-    try {
-      await axios.post(
-        `${url}/property-management/interested/${id}`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      navigate("/my-properties?tab=interested");
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <Row xs={1} md={2} lg={3} className="g-4">

@@ -17,7 +17,6 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 
 function MyProperty() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
   const [key, setKey] = useState("cart");
   const [hoveredTab, setHoveredTab] = useState(null);
 

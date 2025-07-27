@@ -46,6 +46,34 @@ const makeInterested = async (req, res) => {
   }
 };
 
+const getInterested = async (req, res) => {
+  const tenantId = req.user.userId;
+  try {
+    const interested = await interestedModel
+      .find({ tenantId })
+      .populate("propertyId")
+      .select("-landlordId -_id");
+
+    if (interested.length == 0)
+      return res.status(200).json({
+        message: "Interested property",
+        success: true,
+        data: [],
+      });
+    res.status(200).json({
+      message: "Interested property",
+      success: true,
+      data: interested,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+      error: error.message,
+      success: false,
+    });
+  }
+};
+
 // remove interested
 const removeInterested = async (req, res) => {
   const propertyId = req.params.id;
@@ -120,6 +148,32 @@ const addToCart = async (req, res) => {
     });
   }
 };
+
+const getCart = async (req, res) => {
+  const tenantId = req.user.userId;
+  try {
+    const cartItems = await addToCartModel
+      .find({ tenantId })
+      .populate("propertyId")
+      .select("-landlordId -_id");
+
+    if (cartItems.length == 0)
+      return res
+        .status(200)
+        .json({ message: "Cart is Empty", success: true, data: [] });
+
+    res
+      .status(200)
+      .json({ message: "Cart Items", success: true, data: cartItems });
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+      error: error.message,
+      success: false,
+    });
+  }
+};
+
 const removeFromCart = async (req, res) => {
   const propertyId = req.params.id;
   const tenantId = req.user.userId;
@@ -218,8 +272,10 @@ const updateBookingRequest = async (req, res) => {
 
 module.exports = {
   makeInterested,
+  getInterested,
   removeInterested,
   addToCart,
+  getCart,
   removeFromCart,
   bookingRequest,
   updateBookingRequest,

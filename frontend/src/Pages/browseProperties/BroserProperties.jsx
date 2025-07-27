@@ -7,6 +7,7 @@ import Pagination from "./Pagination";
 import axios from "axios";
 import { url } from "../../utils/baseurl";
 import "./styles/BrowseProperties.css";
+import { useNavigate } from "react-router-dom";
 
 function BrowseProperties() {
   const [properties, setProperties] = useState([]);
@@ -21,20 +22,21 @@ function BrowseProperties() {
 
   const token = JSON.parse(sessionStorage.getItem("token"));
 
+  const fetchProperties = async () => {
+    try {
+      const response = await axios.get(`${url}/property`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setProperties(response.data.properties || []);
+      setFilteredProperties(response.data.properties || []);
+    } catch (error) {
+      console.error("Error fetching properties:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchProperties = async () => {
-      try {
-        const response = await axios.get(`${url}/property`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setProperties(response.data.properties || []);
-        setFilteredProperties(response.data.properties || []);
-      } catch (error) {
-        console.error("Error fetching properties:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchProperties();
   }, [token]);
 
@@ -62,6 +64,20 @@ function BrowseProperties() {
     setFilteredProperties(result);
     setCurrentPage(1); // Reset to first page when filters change
   };
+  const makeInterested = async (id) => {
+    try {
+      await axios.post(
+        `${url}/property-management/interested/${id}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      fetchProperties();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Get current properties for pagination
   const indexOfLastProperty = currentPage * propertiesPerPage;
@@ -81,7 +97,11 @@ function BrowseProperties() {
           propertyCount={filteredProperties.length}
         />
 
-        <PropertyList properties={currentProperties} loading={loading} />
+        <PropertyList
+          properties={currentProperties}
+          loading={loading}
+          makeInterested={makeInterested}
+        />
 
         <Pagination
           currentPage={currentPage}

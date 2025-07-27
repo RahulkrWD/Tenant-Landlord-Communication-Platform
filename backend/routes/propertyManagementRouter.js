@@ -12,6 +12,13 @@ router.post(
   propertyManagementController.makeInterested
 );
 
+router.get(
+  "/interested",
+  authMiddleware,
+  roleMiddleware(["tenant"]),
+  propertyManagementController.getInterested
+);
+
 router.delete(
   "/interested/:id",
   authMiddleware,
@@ -25,6 +32,13 @@ router.post(
   authMiddleware,
   roleMiddleware(["tenant"]),
   propertyManagementController.addToCart
+);
+
+router.get(
+  "/cart",
+  authMiddleware,
+  roleMiddleware(["tenant"]),
+  propertyManagementController.getCart
 );
 
 router.delete(
