@@ -56,6 +56,13 @@ router.post(
   propertyManagementController.bookingRequest
 );
 
+router.get(
+  "/booking-request",
+  authMiddleware,
+  roleMiddleware(["tenant"]),
+  propertyManagementController.getBookingRequest
+);
+
 router.patch(
   "/booking-request/:id",
   authMiddleware,

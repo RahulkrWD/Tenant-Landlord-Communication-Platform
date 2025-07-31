@@ -59,7 +59,7 @@ function TenantPropertyDetails() {
 
   const addToCart = async (id) => {
     try {
-      let response = await axios.post(
+      await axios.post(
         `${url}/property-management/add-to-cart/${id}`,
         {},
         {
@@ -67,6 +67,21 @@ function TenantPropertyDetails() {
         }
       );
       navigate("/my-properties?tab=cart");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleBooking = async (propertyId) => {
+    try {
+      await axios.post(
+        `${url}/property-management/booking-request/${propertyId}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      navigate("/my-properties?tab=booked");
     } catch (error) {
       console.log(error);
     }
@@ -166,7 +181,7 @@ function TenantPropertyDetails() {
                 <Button
                   variant="primary"
                   size="lg"
-                  onClick={() => navigate("/my-properties")}
+                  onClick={() => handleBooking(property?._id)}
                 >
                   <CreditCard className="me-2" />
                   Book Now

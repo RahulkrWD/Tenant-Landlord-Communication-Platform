@@ -242,6 +242,34 @@ const bookingRequest = async (req, res) => {
     });
   }
 };
+
+const getBookingRequest = async (req, res) => {
+  const tenantId = req.user.userId;
+  try {
+    const booking = await BookingModel.find({ tenantId })
+      .populate("propertyId")
+      .select("-landlordId -_id");
+
+    if (booking.length == 0)
+      return res.status(200).json({
+        message: "Interested property",
+        success: true,
+        data: [],
+      });
+    res.status(200).json({
+      message: "Interested property",
+      success: true,
+      data: booking,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
+
 const updateBookingRequest = async (req, res) => {
   const bookingId = req.params.id;
   const { status } = req.body;
@@ -278,5 +306,6 @@ module.exports = {
   getCart,
   removeFromCart,
   bookingRequest,
+  getBookingRequest,
   updateBookingRequest,
 };
